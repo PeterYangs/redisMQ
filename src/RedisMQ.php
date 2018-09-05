@@ -17,4 +17,9 @@ class RedisMQ
         echo 123;
     }
 
+
+    function test(){
+
+    }
+
 }
