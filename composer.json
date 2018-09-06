@@ -9,9 +9,11 @@
       "email": "904801074@qq.com"
     }
   ],
+  "homepage": "https://github.com/PeterYangs/redisMQ",
   "minimum-stability": "dev",
   "require": {
-    "predis/predis": "1.1.1"
+    "predis/predis": "1.1.1",
+    "ext-redis": "*"
   },
   "autoload": {
     "psr-4": {

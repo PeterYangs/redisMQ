@@ -19,11 +19,13 @@ class RedisMQ
     function __construct()
     {
 
+        //永久连接redis
+        ini_set('default_socket_timeout', -1);
 
         $redis = new \Redis();
 
 
-        $redis->connect('127.0.0.1');
+        $redis->connect('127.0.0.1',6379,10);
 
 
         $this->redis = $redis;
@@ -35,25 +37,54 @@ class RedisMQ
     /**
      * 添加队列任务
      * Create by Peter
-     * @param $data
+     * @param $data   string 数据
+     * @param int $delay int 执行任务时间
      */
-    function add_task($data)
+    function add_task($data,$delay=0)
     {
 
-        $this->redis->lPush('task', $data);
+
+
+        if($delay){
+
+
+            $this->zAdd($delay,$data);
+
+        }else{
+
+            $this->redis->lPush('task', $data);
+
+        }
+
 
     }
 
 
+    private function zAdd($delay,$data){
+
+        $re=$this->redis->zAdd('delay',$delay,$data."_".mt_rand(100000,999999));
 
 
+        if(!$re) $this->zAdd($delay,$data);
+
+    }
+
+
+    /**
+     * 获取任务
+     * Create by Peter
+     * @return array
+     */
     function get_task(){
 
-        $data = $this->redis->rPop('task');
 
 
 
-        return $data;
+     return   $this->redis->brPop('task',0);
+
+
+
+
     }
 
 
