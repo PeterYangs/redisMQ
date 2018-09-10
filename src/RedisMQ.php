@@ -80,7 +80,7 @@ class RedisMQ
 
 
 
-     return   $this->redis->brPop('task',0);
+     return   $this->redis->brPop('task',0)[1];
 
 
 
