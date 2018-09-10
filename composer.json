@@ -17,7 +17,8 @@
   },
   "autoload": {
     "psr-4": {
-      "peteryang\\src\\": "src/"
+      "peteryang\\src\\": "src/",
+      "peteryang\\tool\\": "tool/"
     }
   }
 }
